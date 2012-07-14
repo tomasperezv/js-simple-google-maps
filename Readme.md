@@ -2,6 +2,7 @@ js-simple-google-maps
 =============
 Interface for the Google Maps API.
 
+Author
 ----------
 Tomas Perez - tom@0x101.com
 
