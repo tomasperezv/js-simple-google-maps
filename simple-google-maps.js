@@ -10,12 +10,16 @@
  * No warranty expressed or implied. Use at your own risk.
  */
 
+/**
+ * @namespace SimpleGoogleMaps
+ */
+window.SimpleGoogleMaps = window.SimpleGoogleMaps || {};
 
 /**
  * @author tom@0x101.com
- * @class SimpleGoogleMaps
+ * @class Map
  */
-function SimpleGoogleMaps(options) {
+SimpleGoogleMaps.Map = function(options) {
 
 	this._map = null;
 	this._geoCoder = null;
@@ -35,9 +39,15 @@ function SimpleGoogleMaps(options) {
 		this._options.mapType = this.DEFAULT_MAP;
 	}
 
+	// If we are passing the HTMLElement, then we can
+	// render directly the map
+	if (typeof this._options.div !== 'undefined') {
+		this.render(this._options.div);
+	}
+
 }
 
-SimpleGoogleMaps.prototype = {
+SimpleGoogleMaps.Map.prototype = {
 
 	/**
 	 * @param {HTMLElement} element
@@ -100,7 +110,7 @@ SimpleGoogleMaps.prototype = {
 	 * @param {Boolean} visible
 	 * @return {Marker} marker
 	 */
-	createMarker: function(position, visible) {
+	addMarker: function(position, visible) {
 		var marker = null;
 		if (this.hasMap()) {
 			var visible = visible || true;
@@ -117,11 +127,12 @@ SimpleGoogleMaps.prototype = {
 	 * @param {String} content
 	 * @return {Label} label
 	 */
-	createLabel: function(content) {
+	addLabel: function(position, content) {
 		var label = null;
 		if (this.hasMap()) {
-			label = new Label({
+			label = new SimpleGoogleMaps.Label({
 				map: this._map,
+				position: position,
 				content: content
 			});
 		}
@@ -138,10 +149,9 @@ SimpleGoogleMaps.prototype = {
 	},
 
 	/**
-	 * @return {Map}
+	 * @return {google.maps.Map}
 	 */
 	getGoogleMap: function() {
 		return this._map;
 	}
 };
-
