@@ -21,7 +21,6 @@ Examples
 
 	// Place a label with the text 'My home' in the position of the address
 	// returned by 'Stockholm'
-	var self = this;
 	map.searchByAddress('Stockholm', function(position) {
 		map.addLabel(position, 'My home');
 	});
