@@ -124,16 +124,19 @@ SimpleGoogleMaps.Map.prototype = {
 	},
 
 	/**
-	 * @param {String} content
+	 * @param {Object} position
+	 * @param {String} text
+	 * @param {String} id
 	 * @return {Label} label
 	 */
-	addLabel: function(position, content) {
+	addLabel: function(position, text, id) {
 		var label = null;
 		if (this.hasMap()) {
 			label = new SimpleGoogleMaps.Label({
 				map: this._map,
 				position: position,
-				content: content
+				text: text,
+				id: id
 			});
 		}
 		return label;

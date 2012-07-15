@@ -5,7 +5,7 @@ var SimpleGoogleMaps = SimpleGoogleMaps || {};
 
 /**
  * @class Label
- * Based on http://blog.mridey.com/2009/09/label-overlay-example-for-google-maps.html
+ * @see http://blog.mridey.com/2009/09/label-overlay-example-for-google-maps.html
  */
 SimpleGoogleMaps.Label = (function() {
 
@@ -13,18 +13,32 @@ SimpleGoogleMaps.Label = (function() {
 		// Store the options and set the values
 		this.options = options;
 		this.setValues(this.options);
-		
-		// Label specific
-		var span = this.span_ = document.createElement('span');
-		span.style.cssText = 'position: relative; left: -50%; top: -8px; ' +
-							'white-space: nowrap; border: 1px solid blue; ' +
-							'padding: 2px; background-color: white';
-	
-		this.div_ = document.createElement('div');
-		this.div_.style.cssText = 'position: absolute; display: none';
+		this.div_ = _createDiv();
 	};
 	
 	Label.prototype = new google.maps.OverlayView;
+
+	var _createDiv = function() {
+		var div = document.createElement('div');
+		div.style.cssText = 'position: absolute; display: none';
+		return div;
+	};
+
+	var buildContent = function(div, position, text, id) {
+
+		var content = '<div class="infowindow"';
+		if (typeof id !== 'undefined') {
+			content += ' id="' + id + '"';
+		}
+
+		content += '>' + text + '</div>';
+
+		div.style.left = position.x + 'px';
+		div.style.top = position.y + 'px';
+		div.style.display = 'block';
+		div.innerHTML = content;
+		return div;
+	}
 	
 	/**
 	 * Implement onAdd
@@ -46,14 +60,9 @@ SimpleGoogleMaps.Label = (function() {
 	 * Draw the label in the current overlay's position.
 	 */
 	Label.prototype.draw = function() {
-	
 		var projection = this.getProjection(),
 			position = projection.fromLatLngToDivPixel(this.get('position'));
-	
-		this.div_.style.left = position.x + 'px';
-		this.div_.style.top = position.y + 'px';
-		this.div_.style.display = 'block';
-		this.div_.innerHTML = this.options.content;
+		this.div_ = buildContent(this.div_, position, this.options.text, this.options.id);
 	};
 
 	return Label;
