@@ -110,14 +110,16 @@ SimpleGoogleMaps.Map.prototype = {
 
   /**
    * @param {LatLng} position
-   * @param {Boolean} visible
    * @param {String} icon
+   * @param {Boolean} visible
    * @return {Marker} marker
    */
-  addMarker: function(position, visible, icon) {
+  addMarker: function(position, icon, visible) {
     var marker = null;
     if (this.hasMap()) {
-      visible = visible || true;
+      if (typeof visible === 'undefined') {
+        visible = true;
+      }
 
       var properties = {
         position: position,
