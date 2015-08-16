@@ -3,7 +3,7 @@
  */
 
 /*jslint browser: true*/
-/*global google, SimpleGoogleMaps */
+/*global google */
 
 var SimpleGoogleMaps = SimpleGoogleMaps || {};
 

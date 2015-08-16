@@ -111,17 +111,28 @@ SimpleGoogleMaps.Map.prototype = {
   /**
    * @param {LatLng} position
    * @param {Boolean} visible
+   * @param {String} icon
    * @return {Marker} marker
    */
-  addMarker: function(position, visible) {
+  addMarker: function(position, visible, icon) {
     var marker = null;
     if (this.hasMap()) {
       visible = visible || true;
-      marker = new google.maps.Marker({
+
+      var properties = {
         position: position,
         map: this._map,
         visible: visible
-      });
+      };
+
+      if (typeof icon !== 'undefined') {
+        properties.icon = {
+          path: icon,
+          scale: 10
+        };
+      }
+
+      marker = new google.maps.Marker(properties);
     }
     return marker;
   },
