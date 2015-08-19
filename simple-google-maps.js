@@ -48,6 +48,12 @@ SimpleGoogleMaps.Map = function(options) {
     this.render(this._options.div);
   }
 
+  /**
+   * @type {Array}
+   * @private
+   */
+  this._markers = [];
+
 };
 
 SimpleGoogleMaps.Map.prototype = {
@@ -135,8 +141,20 @@ SimpleGoogleMaps.Map.prototype = {
       }
 
       marker = new google.maps.Marker(properties);
+      this._markers.push(marker);
     }
     return marker;
+  },
+
+  /**
+   * @see https://developers.google.com/maps/documentation/javascript/examples/marker-remove
+   */
+  clearMarkers: function() {
+    this._markers.map(function(marker) {
+      marker.setMap(null);
+    });
+
+    this._markers = [];
   },
 
   /**
