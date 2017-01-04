@@ -16,7 +16,7 @@
 /**
  * @namespace SimpleGoogleMaps
  */
-window.SimpleGoogleMaps = window.SimpleGoogleMaps || {};
+var SimpleGoogleMaps = SimpleGoogleMaps || {};
 
 /**
  * @author tom@0x101.com
@@ -192,3 +192,5 @@ SimpleGoogleMaps.Map.prototype = {
     return this._map;
   }
 };
+
+module.exports = SimpleGoogleMaps;
